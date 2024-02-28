@@ -21,3 +21,9 @@ def on_startup():
 def homepage():
     return {"hello": "world"} 
  
+ 
+@app.get("/users")
+def users_list_view():
+    q = User.objects.all().limit(10)
+    return list(q)
+    
