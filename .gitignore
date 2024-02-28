@@ -17,3 +17,6 @@ share/
 /app/__pycache__
 /.env
 /app/users/__pycache__
+/nbs
+/requirements.dev.txt
+/app/tests/__pycache__
