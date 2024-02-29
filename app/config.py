@@ -1,4 +1,5 @@
 import os
+from pathlib import Path
 from functools import lru_cache
 from pydantic import Field
 from pydantic_settings import BaseSettings
@@ -6,6 +7,8 @@ from pydantic_settings import BaseSettings
 os.environ['CQLENG_ALLOW_SCHEMA_MANAGEMENT'] = "1"
 
 class Settings(BaseSettings):
+    base_dir: Path = Path(__file__).resolve().parent
+    templates_dir: Path = Path(__file__).resolve().parent / "templates"
     astradb_keyspace: str 
     astradb_client_id: str
     astradb_client_secret: str

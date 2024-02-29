@@ -1,5 +1,5 @@
 import json
-from pydantic import BaseModel, error_wrappers
+from pydantic import BaseModel, ValidationError
 
 def valid_schema_data_or_error(raw_data: dict, SchemaModel: BaseModel):
     data = {}
@@ -8,7 +8,7 @@ def valid_schema_data_or_error(raw_data: dict, SchemaModel: BaseModel):
     try: 
         cleaned_data = SchemaModel(**raw_data)
         data = cleaned_data.dict()
-    except error_wrappers.ValidationError as e:
+    except ValidationError as e:
         error_str = e.json()
     if error_str is not None:
         try: 
