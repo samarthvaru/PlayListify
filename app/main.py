@@ -2,9 +2,12 @@ import pathlib, json
 from fastapi import FastAPI,Request,Form, HTTPException
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
+from starlette.middleware.authentication import AuthenticationMiddleware
+from starlette.authentication import requires
 from cassandra.cqlengine.management import sync_table
 from . import config, db,utils
 from .shortcuts import redirect,render
+from .users.backends import JWTCookieBackend
 from .users.decorators import login_required
 from .users.models import User
 from .users.schemas import UserSignupSchema, UserLoginSchema
@@ -12,9 +15,11 @@ from .users.schemas import UserSignupSchema, UserLoginSchema
 
 app = FastAPI()
 
+app.add_middleware(AuthenticationMiddleware,backend= JWTCookieBackend())
 
 DB_SESSION = None
 
+from .handlers import * #noqa
 #settings = config.get_settings()
 
 @app.on_event("startup")
@@ -27,10 +32,9 @@ def on_startup():
 
 @app.get("/",response_class=HTMLResponse)
 def homepage(request: Request):
-    context = {
-        "abc": 123
-    }
-    return render(request,"home.html",context)
+    if request.user.is_authenticated:
+        return render(request, "dashboard.html", {}, status_code=200)
+    return render(request,"home.html",{})
 
 @app.get("/account",response_class=HTMLResponse)
 @login_required
