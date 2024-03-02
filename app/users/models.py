@@ -1,5 +1,6 @@
 import uuid
 from app.config import get_settings
+from .exceptions import UserHasAccountException, InvalidEmailException
 from cassandra.cqlengine import columns
 from cassandra.cqlengine.models import Model
 from . import validators,security
@@ -34,12 +35,26 @@ class User(Model):
     def create_user(email,password=None):
         q = User.objects.filter(email= email)
         if q.count() != 0:
-            raise Exception("User exists")
+            raise UserHasAccountException("User exists")
 
         valid,msg,email = validators._validate_email(email)
         if not valid:
-            raise Exception(f"Invalid email: {msg}")
+            raise InvalidEmailException(f"Invalid email: {msg}")
         obj = User(email=email)
         obj.set_password(password)
         obj.save()
         return obj        
+    
+    @staticmethod
+    def check_exists(user_id):
+        q = User.objects.filter(user_id=user_id).allow_filtering()
+        return q.count() != 0
+    
+    @staticmethod
+    def by_user_id(user_id=None):
+        if user_id is None:
+            return None
+        q = User.objects.filter(user_id=user_id).allow_filtering()
+        if q.count() != 1:
+            return None
+        return q.first()

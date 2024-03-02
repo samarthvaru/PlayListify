@@ -11,11 +11,14 @@ from .users.backends import JWTCookieBackend
 from .users.decorators import login_required
 from .users.models import User
 from .users.schemas import UserSignupSchema, UserLoginSchema
-
+from .videos.models import Video
+from .videos.routers import router as video_router
 
 app = FastAPI()
 
 app.add_middleware(AuthenticationMiddleware,backend= JWTCookieBackend())
+
+app.include_router(video_router)
 
 DB_SESSION = None
 
@@ -29,6 +32,7 @@ def on_startup():
     global DB_SESSION
     DB_SESSION = db.get_session()
     sync_table(User)
+    sync_table(Video)
 
 @app.get("/",response_class=HTMLResponse)
 def homepage(request: Request):

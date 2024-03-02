@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+
+
+{% block content %}
+
+{{host_id}}
+{{object}}
+
+
+{{object.render()|safe}}
+
+{% endblock %}
