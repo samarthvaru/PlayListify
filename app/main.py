@@ -13,6 +13,8 @@ from .users.models import User
 from .users.schemas import UserSignupSchema, UserLoginSchema
 from .videos.models import Video
 from .videos.routers import router as video_router
+from .watch_events.models import WatchEvent
+from .watch_events.schemas import WatchEventSchema
 
 app = FastAPI()
 
@@ -33,6 +35,7 @@ def on_startup():
     DB_SESSION = db.get_session()
     sync_table(User)
     sync_table(Video)
+    sync_table(WatchEvent)
 
 @app.get("/",response_class=HTMLResponse)
 def homepage(request: Request):
@@ -106,8 +109,15 @@ def users_list_view():
     q = User.objects.all().limit(10)
     return list(q)
 
-@app.post("/watch-event")
-def watch_event_view(request: Request, data: dict):
-    print(data)
-    print(request.user.is_authenticated)
-    return {"working": True}
+@app.post("/watch-event", response_model=WatchEventSchema)
+def watch_event_view(request: Request, watch_event: WatchEventSchema):
+    cleaned_data = watch_event.dict()
+    data = cleaned_data.copy()
+    data.update({
+        "user_id": request.user.username
+    })
+    print("data", data)
+    if (request.user.is_authenticated):
+        WatchEvent.objects.create(**data)
+        return watch_event
+    return watch_event
