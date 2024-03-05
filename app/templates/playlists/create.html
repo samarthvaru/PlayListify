@@ -2,7 +2,7 @@
 
 
 {% block content %}
-<h1>Add Video</h1>
+<h1>Add Playlist</h1>
 
 {% include 'snippets/form_errors.html' %}
 
@@ -13,12 +13,8 @@
         <input type='text' name='title' id='title' placeholder='Your Video Title' value="{% if title %}{{ title }}{% endif %}" />
     </div>
 
-    <div>
-        <label for='url'>YouTube Link</label>
-        <input type='text' name='url' id='url' placeholder='https://www.youtube.com/watch?v=GlDr6aKBtFg' value="{% if url %}{{ url }}{% endif %}" />
-    </div>
 
-    <button type='submit' >Add Video</button>
+    <button type='submit' >Add Playlist</button>
     
 </form>
 

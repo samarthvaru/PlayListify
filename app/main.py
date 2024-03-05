@@ -6,6 +6,8 @@ from starlette.middleware.authentication import AuthenticationMiddleware
 from starlette.authentication import requires
 from cassandra.cqlengine.management import sync_table
 from . import config, db,utils
+from .playlists.routers import router as playlist_router
+from .playlists.models import Playlist
 from .shortcuts import redirect,render
 from .users.backends import JWTCookieBackend
 from .users.decorators import login_required
@@ -15,12 +17,16 @@ from .videos.models import Video
 from .videos.routers import router as video_router
 from .watch_events.models import WatchEvent
 from .watch_events.schemas import WatchEventSchema
+from .watch_events.routers import router as watch_event_router
 
 app = FastAPI()
 
 app.add_middleware(AuthenticationMiddleware,backend= JWTCookieBackend())
 
+app.include_router(playlist_router)
 app.include_router(video_router)
+app.include_router(watch_event_router)
+
 
 DB_SESSION = None
 
@@ -36,6 +42,7 @@ def on_startup():
     sync_table(User)
     sync_table(Video)
     sync_table(WatchEvent)
+    sync_table(Playlist)
 
 @app.get("/",response_class=HTMLResponse)
 def homepage(request: Request):
