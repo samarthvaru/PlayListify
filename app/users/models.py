@@ -41,7 +41,7 @@ class User(Model):
         if not valid:
             raise InvalidEmailException(f"Invalid email: {msg}")
         obj = User(email=email)
-        obj.set_password(password)
+        obj.set_password(password,True)
         obj.save()
         return obj        
     

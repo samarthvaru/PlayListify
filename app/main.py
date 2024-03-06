@@ -84,30 +84,29 @@ def login_post_view(request: Request,
     return redirect("/",cookies=data)
 
     
-@app.get("/signup",response_class=HTMLResponse)
+@app.get("/signup", response_class=HTMLResponse)
 def signup_get_view(request: Request):
-    return render(request,"auth/signup.html")
+    return render(request, "auth/signup.html")
 
-@app.post("/signup",response_class=HTMLResponse)
-def signup_post_view(request: Request,
-                    email: str = Form(...), 
-                    password: str = Form(...),
-                    password_confirm: str = Form(...)
-                    ):
-    raw_data = {
+
+@app.post("/signup", response_class=HTMLResponse)
+def signup_post_view(request: Request, 
+    email: str=Form(...), 
+    password: str = Form(...),
+    password_confirm: str = Form(...)
+    ):
+    raw_data  = {
         "email": email,
         "password": password,
         "password_confirm": password_confirm
     }
-    data,errors = utils.valid_schema_data_or_error(raw_data, UserSignupSchema)
-    
+    data, errors = utils.valid_schema_data_or_error(raw_data, UserSignupSchema)
     context = {
             "data": data,
-            "errors": errors
+            "errors": errors,
         }
     if len(errors) > 0:
-        return render(request,"auth/signup.html",context,status_code=400)
-    
+        return render(request, "auth/signup.html", status_code=400)
     return redirect("/login")
  
  
