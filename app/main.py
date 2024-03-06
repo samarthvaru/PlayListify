@@ -107,6 +107,7 @@ def signup_post_view(request: Request,
         }
     if len(errors) > 0:
         return render(request, "auth/signup.html", status_code=400)
+    User.create_user(data.get('email'),data.get('password').get_secret_value())
     return redirect("/login")
  
  
