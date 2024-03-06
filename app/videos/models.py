@@ -6,6 +6,7 @@ from app.videos.exceptions import InvalidYouTubeVideoURLException, VideoAlreadyA
 from app.users.models import User
 from cassandra.cqlengine import columns
 from cassandra.cqlengine.models import Model
+from cassandra.cqlengine.query import (DoesNotExist, MultipleObjectsReturned)
 from .extractors import extract_video_id
 from fastapi.templating import Jinja2Templates
 
@@ -35,11 +36,28 @@ class Video(Model):
         return t.render(context)
     
     def as_data(self):
-        return {f"{self.host_service}_id":self.host_id, "path":self.path}
+        return {f"{self.host_service}_id":self.host_id, "path":self.path, "title": self.title}
 
     @property
     def path(self):
         return f"/videos/{self.host_id}"
+    
+    @staticmethod
+    def get_or_create(url, user_id=None, **kwargs):
+        host_id = extract_video_id(url)
+        obj = None
+        created = False
+        try:
+            obj = Video.objects.get(host_id=host_id)
+        except MultipleObjectsReturned:
+            q = Video.objects.allow_filtering().filter(host_id=host_id)
+            obj = q.first()
+        except DoesNotExist:
+            obj = Video.add_video(url, user_id=user_id, **kwargs)
+            created = True
+        except:
+            raise Exception("Invalid Request")
+        return obj, created
     
     @staticmethod
     def add_video(url,user_id=None):
