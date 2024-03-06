@@ -11,6 +11,9 @@
         {% if not object.title %}{{ object.host_id }}{% else %}{{ object.title }}{% endif %}
         </a>
     </li>
+    <div style='margin:2rem;'>
+        {% include 'videos/htmx/list-inline.html' %}
+    </div>
 {% endfor %}
 
 {% endblock %}

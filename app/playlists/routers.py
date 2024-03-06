@@ -1,14 +1,24 @@
 import uuid
+from typing import Optional
+from starlette.exceptions import HTTPException
+
+
 from fastapi import APIRouter, Request, Form, Depends
 from fastapi.responses import HTMLResponse
-from starlette.exceptions import HTTPException
+
 from app import utils
 from app.users.decorators import login_required
-from app.shortcuts import render, redirect, get_object_or_404,is_htmx
+from app.shortcuts import (
+    render,
+    redirect, 
+    get_object_or_404,
+    is_htmx
+)
 from app.videos.schemas import VideoCreateSchema
+
 from app.watch_events.models import WatchEvent
 from .models import Playlist
-from .schemas import PlaylistCreateSchema
+from .schemas import PlaylistCreateSchema, PlaylistVideoAddSchema
 
 
 router = APIRouter(
@@ -52,7 +62,7 @@ def playlist_list_view(request: Request):
 # f"{host_id} is cool"
 
 @router.get("/{db_id}", response_class=HTMLResponse)
-def playlist_detail_view(request: Request, db_id: str):
+def playlist_detail_view(request: Request, db_id: uuid.UUID):
     obj = get_object_or_404(Playlist, db_id=db_id)
     if request.user.is_authenticated:
         user_id = request.user.username
@@ -61,6 +71,8 @@ def playlist_detail_view(request: Request, db_id: str):
         "videos": obj.get_videos(),
     }
     return render(request, "playlists/detail.html", context) 
+
+
 
 
 @router.get("/{db_id}/add-video", response_class=HTMLResponse)
@@ -88,9 +100,10 @@ def playlist_video_add_post_view(
     raw_data = {
         "title": title,
         "url": url,
-        "user_id": request.user.username
+        "user_id": request.user.username,
+        "playlist_id": db_id
     }
-    data, errors = utils.valid_schema_data_or_error(raw_data, VideoCreateSchema)
+    data, errors = utils.valid_schema_data_or_error(raw_data, PlaylistVideoAddSchema)
     redirect_path = data.get('path') or f"/playlists/{db_id}" 
     
     context = {
@@ -110,3 +123,27 @@ def playlist_video_add_post_view(
         return render(request, "playlists/htmx/add-video.html", context)
     context = {"path": redirect_path, "title": data.get('title')}
     return render(request, "videos/htmx/link.html", context)
+
+
+
+@router.post("/{db_id}/{host_id}/delete/", response_class=HTMLResponse)
+def playlist_remove_video_item_view(
+        request: Request, 
+        db_id: uuid.UUID,
+        host_id: str,
+        is_htmx=Depends(is_htmx),
+        index: Optional[int] = Form(default=None)
+    ):
+    if not is_htmx:
+        raise HTTPException(status_code=400)
+    try:
+        obj = get_object_or_404(Playlist, db_id=db_id)
+    except:
+        return HTMLResponse("Error. Please reload the page.")
+    if not request.user.is_authenticated:
+        return HTMLResponse("Please login and continue")
+    if isinstance(index, int):
+        host_ids = obj.host_ids
+        host_ids.pop(index)
+        obj.add_host_ids(host_ids=host_ids, replace_all=True)
+    return HTMLResponse("Deleted")
