@@ -1,8 +1,15 @@
-{% extends "base.html " %}
-{% block  title %} Welcome | {{super()}}{% endblock  %}
+{% extends "base.html" %}
+
+{% block title %}Welcome | {{ super() }} {% endblock %}
+
 
 {% block content %}
-<h1>
-    Welcome to PlayListify user!
-</h1>
-{% endblock  %}
+
+<div class='text-center col-md-4 col-sm-6 col-12 mx-auto'>
+<h1>Welcome back user!</h1>
+
+<h3>Search for content</h3>
+{% include 'search/search_form.html' %}
+</div>
+
+{% endblock %}
