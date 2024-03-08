@@ -22,7 +22,7 @@ To get started with PlayListify App, follow these steps:
 
 1. **Installation:** Clone this repository to your local machine and install the required dependencies using `pip install -r requirements.txt`.
 
-2. **Configuration:** Configure your environment variables, database connections, and any other settings required for your deployment environment.
+2. **Configuration:** Configure your environment variables, database connections, and any other settings required for your deployment environment. Add the folder unencrypted/<your-astra-db-secrets.zip>.
 
 3. **Run the Application:** Start the FastAPI server by running `uvicorn app.main:app --reload` from the command line. Your app will be accessible at `http://127.0.0.1:8000`.
 
