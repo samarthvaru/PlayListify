@@ -48,7 +48,7 @@ This project is licensed under the [MIT License](LICENSE), allowing for free use
 
 ## Support
 
-If you encounter any issues or have any questions about PlayListify App, please don't hesitate to reach out to us. You can contact the project maintainers or submit an issue on the GitHub repository.
+If you encounter any issues or have any questions about PlayListify App, please don't hesitate to reach out to us.
 
 Thank you for choosing PlayListify App. We hope you enjoy your viewing experience!
 
