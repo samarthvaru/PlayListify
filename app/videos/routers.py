@@ -64,6 +64,7 @@ def video_create_post_view(request: Request, is_htmx=Depends(is_htmx), title: st
     return redirect(redirect_path)
 
 @router.get("/",response_class=HTMLResponse)
+@login_required
 def video_list_view(request: Request):
     q = Video.objects.all().limit(100)
     context = {
@@ -74,6 +75,7 @@ def video_list_view(request: Request):
 
 
 @router.get("/{host_id}", response_class=HTMLResponse)
+@login_required
 def video_detail_view(request: Request, host_id: str):
     obj = get_object_or_404(Video, host_id=host_id)
     start_time = 0

@@ -51,6 +51,7 @@ def playlist_create_post_view(request: Request, title: str=Form(...)):
 
 
 @router.get("/", response_class=HTMLResponse)
+@login_required
 def playlist_list_view(request: Request):
     q = Playlist.objects.all().limit(100)
     context = {

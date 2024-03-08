@@ -143,6 +143,7 @@ def users_list_view():
     return list(q)
 
 @app.get("/search", response_class=HTMLResponse)
+@login_required
 def search_detail_view(request:Request, q:Optional[str] = None):
     query = None
     context = {}
@@ -159,6 +160,7 @@ def search_detail_view(request:Request, q:Optional[str] = None):
     return render(request, "search/detail.html", context)
 
 @app.post("/watch-event", response_model=WatchEventSchema)
+@login_required
 def watch_event_view(request: Request, watch_event: WatchEventSchema):
     cleaned_data = watch_event.dict()
     data = cleaned_data.copy()
