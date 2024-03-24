@@ -22,25 +22,19 @@ To get started with PlayListify App, follow these steps:
 
 1. **Installation:** Clone this repository to your local machine and install the required dependencies using `pip install -r requirements.txt`.
 
-2. **Configuration:** Configure your environment variables, database connections, and any other settings required for your deployment environment. Add the folder unencrypted/<your-astra-db-secrets.zip>.
+2. **Configuration:** Configure your environment variables, database connections, and any other settings required for your deployment environment. Add the folder `unencrypted` to the root of your project directory.
 
-3. **Run the Application:** Start the FastAPI server by running `uvicorn app.main:app --reload` from the command line. Your app will be accessible at `http://127.0.0.1:8000`.
+3. **Add Database Secrets:** Place the `astradbsecrets.zip` file containing your database secrets inside the `unencrypted` folder. **Do not add the `unencrypted` folder or `astradbsecrets.zip` file to GitHub**. Make sure to add them to your `.gitignore` file to prevent accidental commits.
 
-4. **Sign Up:** Create a new user account to access the full range of features offered by the application.
+4. **Run the Application:** Start the FastAPI server by running `uvicorn app.main:app --reload` from the command line. Your app will be accessible at `http://127.0.0.1:8000`.
 
-5. **Explore and Enjoy:** Once logged in, explore the various features of the application, add videos to your library, create playlists, and start streaming your favorite content.
+5. **Run with Docker:** Build the Docker image using the provided Dockerfile. Run the container with the following command:
 
-## Contributing
+`docker run -d -p 8000:8000 playlistify-app`
 
-We welcome contributions from the community to help improve and enhance PlayListify App. If you'd like to contribute, please follow these guidelines:
+6. **Sign Up:** Create a new user account to access the full range of features offered by the application.
 
-1. Fork the repository and create a new branch for your feature or bug fix.
-
-2. Make your changes, ensuring to maintain code quality, documentation, and test coverage.
-
-3. Submit a pull request, providing a detailed description of your changes and the problem they solve.
-
-4. Your pull request will be reviewed by the project maintainers, and any necessary feedback or changes will be requested before merging.
+7. **Explore and Enjoy:** Once logged in, explore the various features of the application, add videos to your library, create playlists, and start streaming your favorite content.
 
 ## License
 
@@ -48,7 +42,6 @@ This project is licensed under the [MIT License](LICENSE), allowing for free use
 
 ## Support
 
-If you encounter any issues or have any questions about PlayListify App, please don't hesitate to reach out to us.
+If you encounter any issues or have any questions about PlayListify App, please don't hesitate to reach out to us at svaru2306@gmail.com
 
 Thank you for choosing PlayListify App. We hope you enjoy your viewing experience!
-
