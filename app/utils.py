@@ -2,6 +2,14 @@ import json
 from pydantic import BaseModel, ValidationError
 
 def valid_schema_data_or_error(raw_data: dict, SchemaModel: BaseModel):
+    
+    """
+    Validate the given raw data against the specified Pydantic schema model.
+
+    Args:
+    - raw_data (dict): The raw data to be validated.
+    - SchemaModel (BaseModel): The Pydantic schema model to use for validation.
+    """
     data = {}
     errors = []
     error_str = None

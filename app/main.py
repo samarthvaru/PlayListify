@@ -32,6 +32,10 @@ app.include_router(playlist_router)
 app.include_router(video_router)
 app.include_router(watch_event_router)
 
+settings = config.get_settings()
+templates = Jinja2Templates(directory=str(settings.templates_dir))
+
+print(f"Templates directory: {settings.templates_dir}")
 
 DB_SESSION = None
 
@@ -51,6 +55,7 @@ def on_startup():
 
 @app.get("/",response_class=HTMLResponse)
 def homepage(request: Request):
+    """Render the homepage."""
     if request.user.is_authenticated:
         return render(request, "dashboard.html", {}, status_code=200)
     return render(request,"home.html",{})
@@ -58,6 +63,7 @@ def homepage(request: Request):
 @app.get("/account",response_class=HTMLResponse)
 @login_required
 def account_view(request: Request):
+    """Render the account view."""
     session_id = request.cookies.get("session_id")
     if not session_id:
         raise HTTPException(status_code=400)
@@ -66,9 +72,10 @@ def account_view(request: Request):
  
 @app.get("/login",response_class=HTMLResponse)
 def login_get_view(request: Request):
+    """Render the login form."""
 #    session_id = request.cookies.get("session_id") or None
  #   return render(request,"auth/login.html",{"logged_in": session_id is not None})
-  return render(request, "auth/login.html", {})
+    return render(request, "auth/login.html", {})
 
 @app.post("/login",response_class=HTMLResponse)
 def login_post_view(request: Request,
@@ -76,6 +83,9 @@ def login_post_view(request: Request,
                         password: str = Form(...),
     next: Optional[str] = "/"
     ):
+    
+    """Handle login form submission."""
+    
     raw_data = {
         "email": email,
         "password": password,
@@ -96,17 +106,20 @@ def login_post_view(request: Request,
 
 @app.get("/logout", response_class=HTMLResponse)
 def logout_get_view(request: Request):
+    """Render the logout confirmation."""
     if not request.user.is_authenticated:
         return redirect('/login')
     return render(request, "auth/logout.html", {})
 
 @app.post("/logout", response_class=HTMLResponse)
 def logout_post_view(request: Request):
+    """Handle logout form submission."""
     return redirect("/login", remove_session=True)
 
     
 @app.get("/signup", response_class=HTMLResponse)
 def signup_get_view(request: Request):
+    """Render the signup form."""
     return render(request, "auth/signup.html")
 
 
@@ -116,6 +129,8 @@ def signup_post_view(request: Request,
     password: str = Form(...),
     password_confirm: str = Form(...)
     ):
+    """Handle signup form submission."""
+    
     raw_data  = {
         "email": email,
         "password": password,
@@ -133,18 +148,21 @@ def signup_post_view(request: Request,
 
 @app.post('/update-index', response_class=HTMLResponse)
 def htmx_update_index_view(request:Request):
+    """Update the search index."""
     count = update_index()
     return HTMLResponse(f"({count}) Refreshed")
  
  
 @app.get("/users")
 def users_list_view():
+    """List users."""
     q = User.objects.all().limit(10)
     return list(q)
 
 @app.get("/search", response_class=HTMLResponse)
 @login_required
 def search_detail_view(request:Request, q:Optional[str] = None):
+    """Render the search results."""
     query = None
     context = {}
     if q is not None:
