@@ -18,6 +18,8 @@ Welcome to PlayListify App, a cutting-edge platform designed to transform your v
 
 # Try it: https://playlistify1-latest.onrender.com/
 
+![Playlistify](image.png)
+
 ## Getting Started
 
 To get started with PlayListify App, follow these steps:
