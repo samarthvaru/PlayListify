@@ -12,11 +12,11 @@ Welcome to PlayListify App, a cutting-edge platform designed to transform your v
 
 - **Effortless Search:** Find your favorite content effortlessly with our intuitive search engine, enabling you to discover new videos and explore a vast library of content.
 
-- **User-Generated Content:** Add your favorite videos from YouTube directly to your personal library, giving you access to a diverse range of content.
+- **User-Generated Content:** Add your favorite videos from YouTube directly to your personal library, giving you access to a diverse range of content ad free.
 
-- **Custom Playlists:** Create personalized playlists to organize and enjoy your videos your way, making it easy to access and enjoy your favorite content.
+- **Custom Playlists:** Create personalized playlists of your existing videos to organize and enjoy your videos your way, making it easy to access and enjoy your favorite content.
 
-Try it: https://playlistify1-latest.onrender.com/
+# Try it: https://playlistify1-latest.onrender.com/
 
 ## Getting Started
 
