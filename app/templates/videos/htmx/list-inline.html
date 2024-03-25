@@ -9,4 +9,7 @@
         >
         Edit
     </button>
+    {% if not object.host_id and object.title %}
+    <div> Add your first video</div>
+    {% endif %}
 </div>

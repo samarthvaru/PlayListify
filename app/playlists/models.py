@@ -38,7 +38,7 @@ class Playlist(Model):
         videos = []
         for host_id in self.host_ids:
             try:
-                video_obj = Video.objects.get(host_id=host_id)
+                video_obj = list(Video.objects.allow_filtering().filter(host_id=host_id))
             except:
                 video_obj = None
             if video_obj is not None:

@@ -46,6 +46,7 @@ def video_create_post_view(request: Request, is_htmx=Depends(is_htmx), title: st
         "errors": errors,
         "title": title,
         "url": url,
+        "user_id": request.user.username
     }
 
     if is_htmx:
@@ -66,11 +67,12 @@ def video_create_post_view(request: Request, is_htmx=Depends(is_htmx), title: st
 @router.get("/",response_class=HTMLResponse)
 @login_required
 def video_list_view(request: Request):
-    q = Video.objects.all().limit(100)
+    #q = Video.objects.all().limit(100)
+    q = Video.objects.allow_filtering().filter(user_id = request.user.username)
     context = {
         "object_list": q
     }
-    return render(request,"videos/list.html",context)
+    return render(request, "videos/list.html", context)
 
 
 

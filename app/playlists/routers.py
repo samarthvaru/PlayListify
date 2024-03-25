@@ -53,7 +53,7 @@ def playlist_create_post_view(request: Request, title: str=Form(...)):
 @router.get("/", response_class=HTMLResponse)
 @login_required
 def playlist_list_view(request: Request):
-    q = Playlist.objects.all().limit(100)
+    q = Playlist.objects.allow_filtering().filter(user_id = request.user.username)
     context = {
         "object_list": q
     }
@@ -71,7 +71,9 @@ def playlist_detail_view(request: Request, db_id: uuid.UUID):
         "object": obj,
         "videos": obj.get_videos(),
     }
-    return render(request, "playlists/detail.html", context) 
+    videos = obj.get_videos()
+    print(videos)
+    return render(request, "playlists/detail.html", context)
 
 
 
