@@ -2,6 +2,7 @@
     {% include 'snippets/form_errors.html' %}
     
     <form method='POST' action='/playlists/{{db_id}}/add-video' hx-post='/playlists/{{db_id}}/add-video'>
+        <div>Add existing video URL from your library!</div>
         <div>
             <label for='title'>Title</label>
             <input class='form-control' type='text' name='title' id='title' 

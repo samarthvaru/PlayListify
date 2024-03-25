@@ -13,7 +13,8 @@
         {% if object.title %}<h1>{{ object.title }}</h1>{% endif %}
         <div id='video-container'>
             <ul class='list-group mb-3'>
-            {% for video in object.get_videos() %}
+            {% for vid in videos %}
+                {% for video in vid %}
                 {% with path=video.path, title=video.title %}
                 <li class="list-group-item" id='video-item-{{ loop.index }}'>
                 
@@ -28,6 +29,7 @@
                     
                     </li> 
                 {% endwith %}
+                {% endfor %}
             {% endfor %}
         </ul>
         </div>

@@ -11,6 +11,7 @@
     <div class='col-12 col-md-9'>
             <h1>Playlists</h1>
         <div class="list-group">
+        {% if object_list %}
         {% for object in object_list %}
         
             
@@ -19,6 +20,9 @@
                 </a>
 
         {% endfor %}
+    {% else %}
+        <p>Create your first playlist!</p>
+    {% endif %}
         </div>
 </div>
 
