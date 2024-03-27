@@ -16,7 +16,7 @@ Welcome to PlayListify App, a cutting-edge platform designed to transform your v
 
 - **Custom Playlists:** Create personalized playlists of your existing videos to organize and enjoy your videos your way, making it easy to access and enjoy your favorite content.
 
-# Try it: https://playlistify1-latest.onrender.com/
+# Try it on Mobile or PC: https://playlistify1-latest.onrender.com/
 
 ![Playlistify](image.png)
 ![Playlisitfy1](playlistify-ss1.png)
