@@ -19,6 +19,13 @@ Welcome to PlayListify App, a cutting-edge platform designed to transform your v
 # Try it: https://playlistify1-latest.onrender.com/
 
 ![Playlistify](image.png)
+![Playlisitfy1](playlistify_-_ss_1.png)
+![Playlisitfy1](playlistify_-_ss_2.png)
+![Playlisitfy1](playlistify_-_ss_3.png)
+![Playlisitfy1](playlistify_-_ss_4.png)
+![Playlisitfy1](playlistify_-_ss_5.png)
+![Playlisitfy1](playlistify_-_ss_6.png)
+
 
 ## Getting Started
 
