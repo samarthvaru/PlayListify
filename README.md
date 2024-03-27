@@ -18,13 +18,13 @@ Welcome to PlayListify App, a cutting-edge platform designed to transform your v
 
 # Try it on Mobile or PC: https://playlistify1-latest.onrender.com/
 
-![Playlistify](image.png)
-![Playlisitfy1](playlistify-ss1.png)
-![Playlisitfy1](playlistify-ss2.png)
-![Playlisitfy1](playlistify-ss3.png)
-![Playlisitfy1](playlistify-ss4.png)
-![Playlisitfy1](playlistify-ss5.png)
-![Playlisitfy1](playlistify-ss6.png)
+![Playlistify](screenshots/image.png)
+![Playlisitfy1](screenshots/playlistify-ss1.png)
+![Playlisitfy1](screenshots/playlistify-ss2.png)
+![Playlisitfy1](screenshots/playlistify-ss3.png)
+![Playlisitfy1](screenshots/playlistify-ss4.png)
+![Playlisitfy1](screenshots/playlistify-ss5.png)
+![Playlisitfy1](screenshots/playlistify-ss6.png)
 
 
 ## Getting Started
